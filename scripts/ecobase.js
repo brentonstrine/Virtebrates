@@ -1,3 +1,5 @@
+define(["virts", "render", "utils"],
+function(virts,   render,   utils) {
     var ecobase = {
         size: 10,
         pixels: [],
@@ -60,14 +62,27 @@
         render.ecobase(ecobase);
         //   return "Setup complete.";
       },
+      cycle: function(){
           console.group ("Cycle");
+          for (id in ecobase.pixels) {
+              var pixel = ecobase.pixels[id];
               var grass = pixel.grass;
               var cows = pixel.cows;
 
             //grow grass
             if(grass){
                 grass.energy += grass.growth_rate;
+            }
 
+            //operate cow
+            for(cow in cows){
+                console.group ("Operate Cow #" + cow);
+                cows[cow].operate(pixel);
+                console.groupEnd();
+            }
+        }
+        console.groupEnd();
+      },
     }
 });
 

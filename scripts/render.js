@@ -3,7 +3,7 @@ define(["ecobase"], function(ecobase) {
         // initialize environment
         $env = $(".environment");
         for(var i = 0; i < size; i++){
-            $env.append('<div id="pixel"' + i + ' class="pixel"></div>');
+            $env.append('<div id="pixel' + i + '" class="pixel"></div>');
             console.log("created pixel.")
         }
 
@@ -19,51 +19,34 @@ define(["ecobase"], function(ecobase) {
             init();
         }
         for(var i = 0; i < ecobase.size; i++){
-          // draw pixel
+            var $pixel = $env.find("#pixel" + i);
 
-              // plant grass
-              if(i<10 || i>22){
-                ecobase[i].grass = virts.get_new_grass;
-              } else {//no grass here
-                ecobase[i].grass = false;
-              }
+            // render grass
+            var grass = ecobase.pixels[i].grass;
+            $pixel.css("background-color", "rgb(0," + (grass.energy | 0) + ",0)");
 
-              // place cows
-              if(i==Math.ceil(size/2)){
-                 ecobase[i].cows = [virts.get_new_cow];
-              } else {
-                ecobase[i].cows = [];
-              }
-          }
-
-        // render grass
-
-        // render cows
-
-        var cow = grid[i].cow;
-        var cowPixel = "#p" + i;
-
-        var e = (grid[i].grass.energy);
-        $l.find("#p" + i).css("background-color", "rgb(0," + e + ",0)");
-
-        // Redraw cows
-        if(cow){
-            //place cow if missing
-            if(!$(cowPixel + " .cow")[0]){
-                $(cowPixel).append("<div class='cow'></div>");
+            // render cows
+            var cows = ecobase.pixels[i].cows;
+            $pixel.find(".cow").remove();
+            for(cow in cows){
+                var size = 2 + (Math.sqrt(cow.energy));
+             $pixel
+                .append("<div class='cow'></div>")
+                .css({
+                    "width" : size + "px",
+                    "height": size + "px",
+                });
             }
-            var size = 2 + (cow.energy / 100) ;
-            $(cowPixel).find(".cow").css({"width": size + "px","height": size + "px"});
         }
     };
 
-    var render_cow_move = function(i, move, cow) {
-      // remove current cow
-      $("#p" + i + " .cow").remove();
-
-      // place cow in new pixel
-      $("#p" + (i + move) + " .cow").append("<div class='cow'></div>");
-    };
+    // var render_cow_move = function(i, move, cow) {
+    //   // remove current cow
+    //   $("#p" + i + " .cow").remove();
+    //
+    //   // place cow in new pixel
+    //   $("#p" + (i + move) + " .cow").append("<div class='cow'></div>");
+    // };
 
 
     return {

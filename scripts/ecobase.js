@@ -43,7 +43,7 @@ define(["virts", "render"], function(virts, render) {
                 ecobase.pixels[i] = { index: i };
 
                 // plant grass
-                if(i<10 || i>22){
+                if(i<7 || i>22){
                   ecobase.pixels[i].grass = virts.get_new_grass;
                 } else {//no grass here
                   ecobase.pixels[i].grass = false;

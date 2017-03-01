@@ -14,7 +14,7 @@ define(["ecobase"], function(ecobase) {
 
     };
 
-    var ecobase = function(){
+    var ecobase = function(ecobase){
         if(!$env){
             init();
         }

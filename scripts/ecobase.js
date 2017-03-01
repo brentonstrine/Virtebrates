@@ -1,19 +1,21 @@
 define(["virts", "render"], function(virts, render) {
-    var ecobase = [];
-    var size = 10;
+    var ecobase = {
+        size: 10,
+        pixels: [],
+    };
     return {
-        size: size,
+        size: ecobase.size,
         get: function () {
           return ecobase;
         },
         get_pixel: function (id) {
-          return ecobase[id];
+          return ecobase.pixels[id];
         },
         get_cows: function (pixel_id) {
-          return ecobase[pixel_id].cows;
+          return ecobase.pixels[pixel_id].cows;
         },
         set: function (id, payload) {
-          return !!(ecobase[id] = payload);
+          return !!(ecobase.pixels[id] = payload);
         },
         init: function(){
             var self = this;
@@ -22,7 +24,6 @@ define(["virts", "render"], function(virts, render) {
             $c = $(".controls");
             $c.on("click", "#setup", function(){
                 self.setup();
-                render.ecobase();
             });
             $c.on("click", "#cycle", function(){
                 self.cycle();
@@ -34,30 +35,30 @@ define(["virts", "render"], function(virts, render) {
             // render: remove contents
             //$l.find("div").remove();
 
-            for(var i = 0; i<size; i++){
+            for(var i = 0; i<ecobase.size; i++){
                 //
                 //$l.append("<div id='p" + i + "'></div>");
 
                 // index each pixel
-                ecobase[i] = { index: i };
+                ecobase.pixels[i] = { index: i };
 
                 // plant grass
                 if(i<10 || i>22){
-                  ecobase[i].grass = virts.get_new_grass;
+                  ecobase.pixels[i].grass = virts.get_new_grass;
                 } else {//no grass here
-                  ecobase[i].grass = false;
+                  ecobase.pixels[i].grass = false;
                 }
 
                 // place cows
-                if(i==Math.ceil(size/2)){
-                   ecobase[i].cows = [virts.get_new_cow];
+                if(i==Math.ceil(ecobase.size/2)){
+                   ecobase.pixels[i].cows = [virts.get_new_cow];
                 } else {
-                  ecobase[i].cows = [];
+                  ecobase.pixels[i].cows = [];
                 }
             }
 
-            console.log(ecobase);
-        //   render();
+        console.log(ecobase);
+        render.ecobase(ecobase);
         //   return "Setup complete.";
       },
     }

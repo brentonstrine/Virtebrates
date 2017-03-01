@@ -1,9 +1,15 @@
 define(["virts"], function(virts) {
     var ecobase = [];
-    var size = 100;
+    var size = 10;
     return {
         get: function () {
           return ecobase;
+        },
+        get_pixel: function (id) {
+          return ecobase[id];
+        },
+        get_cows: function (pixel_id) {
+          return ecobase[pixel_id].cows;
         },
         set: function (id, payload) {
           return !!(ecobase[id] = payload);
@@ -28,11 +34,11 @@ define(["virts"], function(virts) {
                   ecobase[i].grass = false;
                 }
 
-                // place verts
+                // place cows
                 if(i==Math.ceil(size/2)){
-                   ecobase[i].cow = virts.get_new_cow;
+                   ecobase[i].cows = [virts.get_new_cow];
                 } else {
-                  ecobase[i].cow = false;
+                  ecobase[i].cows = [];
                 }
             }
 

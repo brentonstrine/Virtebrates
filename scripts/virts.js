@@ -1,72 +1,65 @@
-define([], function() {
+define(["utils"],
+function(utils) {
     var Grass = function(){
         return {
             energy: 100,
             growth_rate: 1,
+            eat: function(eat_desire) {
+                //calculate how much grass can be eaten
+                var available_grass = eat_desire;
+                if(this.energy <= eat_desire) {
+                    available_grass = this.energy;
+                }
+
+                // grass loses energy
+                this.energy -= available_grass;
+
+                // kill grass if it's all gone
+                if(this.energy == 0){
+                    debugger;
+                    this.remove()
+                }
+
+                //tell animal how much it ate
+                return available_grass;
+            },
         };
     };
 
     var Cow = function(){
-        var eat = function (pixel) {
-            // console.log("cow eats! weighs: ", pixel.cow.energy)
-            // var cow = pixel.cow;
-            // var grass = pixel.grass;
-            // var size_factor = 0;
-            // var burn = 0;
-            // var gain = 0;
-            //
-            // // cow expends energy to eat
-            // cow.energy -= cow.eat_energy_use;
-            // burn += cow.eat_energy_use;
-            //
-            // if(grass) {
-            // // grass loses energy
-            // grass.energy -= cow.eat_rate;
-            // grass.energy -= size_factor;
-            // // cow gains energy from grass
-            // cow.energy += cow.eat_rate + size_factor;
-            // gain += cow.eat_rate + size_factor;
-            //
-            // // if cow eats all the grass, grass dies and cow only gets as much as was left
-            // if(grass.energy<=0){
-            // cow.energy += grass.energy;
-            // gain += grass.energy;
-            // grid[pixel.index].grass = false;
-            // console.log("GRASS KILLED-----------------------------");
-            // //delete pixel.grass;//wait, is this deleting the top level grass or what?
-            // }
-            // console.log("ate: ", cow.eat_rate + size_factor);
-            // } else {
-            // console.log("no grass here.")
-            // }
-            // console.log( "cow ate. now weighs: ", cow.energy);
-            // return {
-            // burn: burn,
-            // gain: gain,
-            // }
+        var eat = function (pixel, self) {
+            // cow expends energy to eat
+            console.log("[eat ] cow energy reduced from " + self.energy + " to " + (self.energy - self.eat_energy_use) + ".");
+            self.energy -= self.eat_energy_use;
+
+            // cow eats grass
+            var ate = pixel.grass.eat(self.eat_energy_use);
+
+            // cow gains energy from grass
+            console.log("[eat ] cow energy incrsed from " + self.energy + " to " + (self.energy + ate) + ".");
+            self.energy += ate;
         };
         var operate = function (pixel){
             console.log("cow in operation.")
-            //var cow = cows[id];
 
             //burn base energy
             console.log("[base] cow energy reduced from " + this.energy + " to " + (this.energy - this.energy_base_use) + ".");
             this.energy -= this.energy_base_use;
-//
-//                 if(cow.energy > 0) {
-//                     // determine eating
-//                     if(utilities.spin_wheel(cow.eat_proclivity)) {
-//                         eat(pixel, cow);
-//                     }
+
+            if(this.energy > 0) {
+                    // determine eating
+                    //if(utils.spin_wheel(this.eat_proclivity)) {
+                        eat(pixel, this);
+                    //}
 //
 //                 if(spin_wheel(cow.move_proclivity)) {
 //                 console.log("move burn b", en.burn)
 //                 en.burn += move(pixel, cow);
 //                 console.log("move burn a", en.burn)
 //                 }
-//                 } else {
-//                     alert ("cow ded");
-//                 }
+            } else {
+                alert ("cow ded");
+            }
 //
 // console.log("cow burned", en.burn);
 // console.log("cow gained", en.gain);

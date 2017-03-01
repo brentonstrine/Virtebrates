@@ -24,6 +24,9 @@ define(["ecobase"], function(ecobase) {
             // render grass
             var grass = ecobase.pixels[i].grass;
             $pixel.css("background-color", "rgb(0," + (grass.energy | 0) + ",0)");
+            if(!grass){
+                $pixel.css("box-shadow", "inset 0 0 10px 1px #f00");
+            }
 
             // render cows
             var cows = ecobase.pixels[i].cows;

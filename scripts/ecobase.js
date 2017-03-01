@@ -1,4 +1,3 @@
-define(["virts", "render"], function(virts, render) {
     var ecobase = {
         size: 10,
         pixels: [],
@@ -61,6 +60,14 @@ define(["virts", "render"], function(virts, render) {
         render.ecobase(ecobase);
         //   return "Setup complete.";
       },
+          console.group ("Cycle");
+              var grass = pixel.grass;
+              var cows = pixel.cows;
+
+            //grow grass
+            if(grass){
+                grass.energy += grass.growth_rate;
+
     }
 });
 

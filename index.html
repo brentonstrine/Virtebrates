@@ -3,9 +3,27 @@
 <head>
     <script src="scripts/jquery.js"></script>
     <script data-main="scripts/main" src="scripts/require.js"></script>
+    <style>
+    .environment > div {
+      width: 20px;
+      height: 20px;
+      background-color: rgb(0,0,0);
+      display: inline-block;
+      margin: 1px;
+      color: white;
+      vertical-align: top;
+    }
+    .cow {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: brown;
+      border: solid 1px sandybrown;
+    }
+    </style>
 </head>
 <body>
-<div class="landscape"></div>
+<div class="environment"></div>
 <div class="controls"></div>
 </body>
 </html>

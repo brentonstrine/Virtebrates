@@ -1,7 +1,8 @@
-define(["virts"], function(virts) {
+define(["virts", "render"], function(virts, render) {
     var ecobase = [];
     var size = 10;
     return {
+        size: size,
         get: function () {
           return ecobase;
         },
@@ -13,6 +14,19 @@ define(["virts"], function(virts) {
         },
         set: function (id, payload) {
           return !!(ecobase[id] = payload);
+        },
+        init: function(){
+            var self = this;
+
+            // initialize conntrol handlers
+            $c = $(".controls");
+            $c.on("click", "#setup", function(){
+                self.setup();
+                render.ecobase();
+            });
+            $c.on("click", "#cycle", function(){
+                self.cycle();
+            });
         },
         setup: function(){
             console.log("setup");

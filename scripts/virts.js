@@ -44,9 +44,9 @@ function(utils) {
             self.energy -= self.move_energy_use;
 
             // cow decides which direction to go
-            var move = 1;
+            var move = utils.pickFrom(1,self.move_speed);
             if(utils.coinFlip()){
-                move = -1;
+                move = move * -1;
             }
             console.log("[move] cow will move " + move)
 
@@ -87,12 +87,12 @@ function(utils) {
         return {
             energy: 1000,
             energy_base_use: 10,
-            eat_rate: 50,
+            eat_rate: 40,
             eat_proclivity: .8,
-            eat_energy_use: 10,
+            eat_energy_use: 8,
             move_proclivity: .9,
-            move_speed: 1,
-            move_energy_use: 20,
+            move_speed: 4,
+            move_energy_use: 16,
             operate: operate,
             locked: false,
         };

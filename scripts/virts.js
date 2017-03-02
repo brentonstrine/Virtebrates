@@ -37,7 +37,33 @@ function(utils) {
             console.log("[eat ] cow energy incrsed from " + self.energy + " to " + (self.energy + ate) + ".");
             self.energy += ate;
         };
-        var operate = function (pixel){
+        var move = function (ecobase, pixel_id, cow_id) {
+            var self = ecobase.pixels[pixel_id].cows[cow_id];
+            // cow expends energy to move
+            console.log("[move] cow energy reduced from " + self.energy + " to " + (self.energy - self.move_energy_use) + ".");
+            self.energy -= self.move_energy_use;
+
+            // cow decides which direction to go
+            var move = 1;
+            if(utils.coinFlip()){
+                move = -1;
+            }
+            console.log("[move] cow will move " + move)
+
+            // remove cow from this pixel
+            ecobase.pixels[pixel_id].cows.splice(cow_id, 1);
+            console.log("[move] cow is currently in pixel " + pixel_id)
+
+            // add cow to transit pixel
+            ecobase.transit.push({
+                destination_pixel: Number(pixel_id) + Number(move),
+                cow: self,
+            });
+            console.log("[move] cow  will  move to  pixel " + (Number(pixel_id) + Number(move)) );
+
+        };
+        var operate = function (ecobase, pixel_id, cow_id){
+            var pixel = ecobase.pixels[id];
             console.log("cow in operation.")
 
             //burn base energy
@@ -45,24 +71,17 @@ function(utils) {
             this.energy -= this.energy_base_use;
 
             if(this.energy > 0) {
-                    // determine eating
-                    //if(utils.spin_wheel(this.eat_proclivity)) {
-                        eat(pixel, this);
-                    //}
-//
-//                 if(spin_wheel(cow.move_proclivity)) {
-//                 console.log("move burn b", en.burn)
-//                 en.burn += move(pixel, cow);
-//                 console.log("move burn a", en.burn)
-//                 }
+                // determine eating
+                if(utils.spin_wheel(this.eat_proclivity)) {
+                    eat(pixel, this);
+                }
+
+                if(utils.spin_wheel(this.move_proclivity)) {
+                    move(ecobase, pixel_id, cow_id);
+                }
             } else {
                 alert ("cow ded");
             }
-//
-// console.log("cow burned", en.burn);
-// console.log("cow gained", en.gain);
-// console.log("cow ended at   --------------------", cow.energy);
-// //console.log(cow)
         };
 
         return {
@@ -75,6 +94,7 @@ function(utils) {
             move_speed: 1,
             move_energy_use: 20,
             operate: operate,
+            locked: false,
         };
     };
 

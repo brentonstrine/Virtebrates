@@ -1,8 +1,9 @@
 define(["virts", "render", "utils"],
 function(virts,   render,   utils) {
     var ecobase = {
-        size: 10,
+        size: 100,
         pixels: [],
+        transit: [],
     };
     return {
         size: ecobase.size,
@@ -69,11 +70,21 @@ function(virts,   render,   utils) {
 
             //operate cow
             for(cow in cows){
+                var this_cow = cows[cow];
                 console.group ("Operate Cow #" + cow);
-                cows[cow].operate(pixel);
+                this_cow.operate(ecobase, id, cow);
                 console.groupEnd();
             }
         }
+
+        // drop in-transit cows to appropriate place
+        for (i in ecobase.transit) {
+            var destination_pixel = ecobase.transit[i].destination_pixel;
+            var cow = ecobase.transit[i].cow;
+            ecobase.pixels[destination_pixel].cows.push(cow);
+        }
+        ecobase.transit = [];
+
         render.ecobase(ecobase);
         console.groupEnd();
       },

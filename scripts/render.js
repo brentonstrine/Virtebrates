@@ -1,4 +1,4 @@
-define(["ecobase"], function(ecobase) {
+define([], function() {
     var init = function(size){
         // initialize environment
         $env = $(".environment");
@@ -16,6 +16,7 @@ define(["ecobase"], function(ecobase) {
 
     var ecobase = function(ecobase){
         if(!$env){
+            debugger;
             init();
         }
         for(var i = 0; i < ecobase.size; i++){
@@ -24,7 +25,7 @@ define(["ecobase"], function(ecobase) {
             // render grass
             var grass = ecobase.pixels[i].grass;
             $pixel.css("background-color", "rgb(0," + (grass.energy | 0) + ",0)");
-            if(!grass){
+            if(grass.energy<=0){
                 $pixel.css("box-shadow", "inset 0 0 10px 1px #f00");
             }
 

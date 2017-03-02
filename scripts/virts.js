@@ -7,6 +7,8 @@ function(utils) {
             eat: function(eat_desire) {
                 //calculate how much grass can be eaten
                 var available_grass = eat_desire;
+                console.log("[grass] had " + this.energy + ".");
+
                 if(this.energy <= eat_desire) {
                     available_grass = this.energy;
                 }
@@ -14,11 +16,7 @@ function(utils) {
                 // grass loses energy
                 this.energy -= available_grass;
 
-                // kill grass if it's all gone
-                if(this.energy == 0){
-                    debugger;
-                    this.remove()
-                }
+                console.log("[grass] has " + this.energy + ".");
 
                 //tell animal how much it ate
                 return available_grass;
@@ -33,7 +31,7 @@ function(utils) {
             self.energy -= self.eat_energy_use;
 
             // cow eats grass
-            var ate = pixel.grass.eat(self.eat_energy_use);
+            var ate = pixel.grass.eat(self.eat_rate);
 
             // cow gains energy from grass
             console.log("[eat ] cow energy incrsed from " + self.energy + " to " + (self.energy + ate) + ".");
@@ -68,11 +66,11 @@ function(utils) {
         };
 
         return {
-            energy: 100,
-            energy_base_use: 6,
-            eat_rate: 40,
+            energy: 1000,
+            energy_base_use: 10,
+            eat_rate: 50,
             eat_proclivity: .8,
-            eat_energy_use: 8,
+            eat_energy_use: 10,
             move_proclivity: .9,
             move_speed: 1,
             move_energy_use: 20,
@@ -81,8 +79,8 @@ function(utils) {
     };
 
     return {
-        get_new_cow: new Cow(),
-        get_new_grass: new Grass(),
+        get_new_cow: function(){return new Cow()},
+        get_new_grass: function(){return new Grass()},
     }
 });
 

@@ -33,26 +33,19 @@ function(virts,   render,   utils) {
         setup: function(){
             console.log("setup");
 
-            // render: remove contents
-            //$l.find("div").remove();
-
             for(var i = 0; i<ecobase.size; i++){
-                //
-                //$l.append("<div id='p" + i + "'></div>");
-
                 // index each pixel
                 ecobase.pixels[i] = { index: i };
 
                 // plant grass
-                if(i<7 || i>22){
-                  ecobase.pixels[i].grass = virts.get_new_grass;
-                } else {//no grass here
-                  ecobase.pixels[i].grass = false;
+                ecobase.pixels[i].grass = virts.get_new_grass();
+                if(i>7 && i<22){//no grass here
+                    ecobase.pixels[i].grass.energy = 0;
                 }
 
                 // place cows
                 if(i==Math.ceil(ecobase.size/2)){
-                   ecobase.pixels[i].cows = [virts.get_new_cow];
+                   ecobase.pixels[i].cows = [virts.get_new_cow()];
                 } else {
                   ecobase.pixels[i].cows = [];
                 }
@@ -70,7 +63,7 @@ function(virts,   render,   utils) {
               var cows = pixel.cows;
 
             //grow grass
-            if(grass){
+            if(grass && grass.energy > 0){
                 grass.energy += grass.growth_rate;
             }
 
@@ -81,6 +74,7 @@ function(virts,   render,   utils) {
                 console.groupEnd();
             }
         }
+        render.ecobase(ecobase);
         console.groupEnd();
       },
     }

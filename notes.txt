@@ -1,0 +1,71 @@
+try {
+-if code has any error, kill it.
+-if code runs for too long, kill it.
+} catch {
+
+}
+
+{
+    photosynthesis: true,
+    energy: 10,
+    growth: .1,
+    reproduce: function(){
+        var energyThreshold= 10;
+        var reproductionThreshold = 10;
+        var energyReproductionThreshold = 10;
+        if(energy>=energyThreshold){
+            if(lastReproduction>=reproductionThreshold){
+                while(energy>=energyReproductionThreshold){
+                    reproduce();
+                }
+            }
+        }
+    },
+    reproduce: {
+        energyThreshold: 10,
+        reproductionThreshold: 10,
+        energyReproductionThreshold: 10,
+        logic: [
+            {
+                type: "condition",
+                terms: [energy, energyThreshold],
+                comparison: "greater",
+            },
+        (energy>=energyThreshold){
+            if(lastReproduction>=reproductionThreshold){
+                while(energy>=energyReproductionThreshold){
+                    reproduce();
+                }
+            }
+        }
+
+    },
+
+}
+
+
+
+statementList: [
+ifelse,
+return,
+var,
+assign,
+loop,
+
+
+]
+
+loop
+    for x in y
+    do x while y
+
+    loop through x
+        for each (item in obj){}
+        for in (item in obj){}
+        for (item in obj){}
+    loop while
+        while(true)
+
+    loop from x to y by z
+
+    

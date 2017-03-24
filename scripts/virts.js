@@ -2,7 +2,7 @@ define(["utils"],
 function(utils) {
     var Grass = function(){
         return {
-            energy: 100,
+            energy: 150,
             growth_rate: 1,
             eat: function(eat_desire) {
                 //calculate how much grass can be eaten
@@ -23,7 +23,14 @@ function(utils) {
             },
         };
     };
+    //virt abilities
+    var see = function(position, distance_can_see) {
+        var ecobase = ecobase.get();
+        var current_pixel = ecobase.pixels[position];
+        var visible_pixels = [];
 
+
+    };
     var Cow = function(){
         var eat = function (pixel, self) {
             // cow expends energy to eat
@@ -60,7 +67,6 @@ function(utils) {
                 cow: self,
             });
             console.log("[move] cow  will  move to  pixel " + (Number(pixel_id) + Number(move)) );
-
         };
         var operate = function (ecobase, pixel_id, cow_id){
             var pixel = ecobase.pixels[id];
@@ -76,6 +82,7 @@ function(utils) {
                     eat(pixel, this);
                 }
 
+                // determine moving
                 if(utils.spin_wheel(this.move_proclivity)) {
                     move(ecobase, pixel_id, cow_id);
                 }

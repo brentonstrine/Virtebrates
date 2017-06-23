@@ -67,5 +67,3 @@ loop
         while(true)
 
     loop from x to y by z
-
-    
